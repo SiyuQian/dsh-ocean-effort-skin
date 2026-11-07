@@ -1,0 +1,12 @@
+/* Background only: the official theme stays as is. The picture sits on the
+   page; official surfaces are made translucent via theme tokens (client.ts). */
+html[data-dsh-ocean-skin], html[data-dsh-ocean-skin] body {
+  min-height: 100%;
+  background-color: #e9e4da;
+  background-image: linear-gradient(rgba(250, 247, 240, 0.30), rgba(250, 247, 240, 0.30)), var(--dsh-ocean-bg);
+  background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;
+}
+html[data-dsh-ocean-skin] body[data-ds-dark-theme] {
+  background-color: #141312;
+  background-image: linear-gradient(rgba(12, 11, 10, 0.62), rgba(12, 11, 10, 0.62)), var(--dsh-ocean-bg);
+}
