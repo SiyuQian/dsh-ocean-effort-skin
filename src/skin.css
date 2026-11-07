@@ -1,12 +1,26 @@
-/* Background only: the official theme stays as is. The picture sits on the
-   page; official surfaces are made translucent via theme tokens (client.ts). */
+/* Background only: the official theme stays as is. Pictures sit in two fixed
+   layers behind the app and crossfade (client.ts rotates them). The character
+   sits in the left quarter of every picture, under the sidebar, so the layers
+   anchor left. Official surfaces are translucent via theme tokens (client.ts). */
 html[data-dsh-ocean-skin], html[data-dsh-ocean-skin] body {
   min-height: 100%;
-  background-color: #e9e4da;
-  background-image: linear-gradient(rgba(250, 247, 240, 0.30), rgba(250, 247, 240, 0.30)), var(--dsh-ocean-bg);
-  background-size: cover; background-position: center; background-attachment: fixed; background-repeat: no-repeat;
+  background: transparent;
 }
-html[data-dsh-ocean-skin] body[data-ds-dark-theme] {
-  background-color: #141312;
-  background-image: linear-gradient(rgba(12, 11, 10, 0.62), rgba(12, 11, 10, 0.62)), var(--dsh-ocean-bg);
+html[data-dsh-ocean-skin] { background-color: #eef2fa; }
+html[data-dsh-ocean-skin]:has(body[data-ds-dark-theme]) { background-color: #141312; }
+
+.dsh-ocean-bg-layer {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-size: cover; background-position: left center; background-repeat: no-repeat;
+  opacity: 0; transition: opacity 2.4s ease-in-out;
+}
+.dsh-ocean-bg-layer[data-on] { opacity: 1; }
+.dsh-ocean-bg-layer::after {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(250, 247, 240, 0.18);
+}
+body[data-ds-dark-theme] .dsh-ocean-bg-layer::after { background: rgba(12, 11, 10, 0.62); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dsh-ocean-bg-layer { transition: none; }
 }

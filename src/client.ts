@@ -1,6 +1,6 @@
 // dsh-ocean-effort-skin — client half.
 // Keeps the official DSH theme. Adds two things only:
-//   1. the uiskin ocean background behind the app, under translucent official surfaces;
+//   1. rotating, crossfading ocean backgrounds behind the app, under translucent official surfaces;
 //   2. the Claude-desktop model + effort picker (pixel-field slider), ported from
 //      zkforge/dsh-claude-desktop-theme (MIT, see src/model-controls/LICENSE-claude-desktop-theme).
 import { useSyncExternalStore } from 'react';
@@ -11,7 +11,38 @@ import controlsCss from './model-controls/controls.css';
 import effortCss from './model-controls/effort.css';
 import tokensCss from './tokens.css';
 import skinCss from './skin.css';
-import bgUri from '../assets/bg.jpg';
+import bg1 from '../assets/bg-1.jpg';
+import bg2 from '../assets/bg-2.jpg';
+import bg3 from '../assets/bg-3.jpg';
+import bg4 from '../assets/bg-4.jpg';
+
+const BACKGROUNDS = [bg1, bg2, bg3, bg4];
+const ROTATE_MS = 60_000;
+
+// Two stacked layers; the hidden one loads the next picture, then fades in.
+function mountBackgrounds(): () => void {
+  const layers = [0, 1].map(() => {
+    const el = document.createElement('div');
+    el.className = 'dsh-ocean-bg-layer';
+    el.setAttribute('aria-hidden', 'true');
+    document.body.prepend(el);
+    return el;
+  });
+  let index = Math.floor(Math.random() * BACKGROUNDS.length);
+  let front = 0;
+  layers[0].style.backgroundImage = `url("${BACKGROUNDS[index]}")`;
+  layers[0].setAttribute('data-on', '');
+  const timer = window.setInterval(() => {
+    if (document.hidden) return;
+    index = (index + 1) % BACKGROUNDS.length;
+    const back = 1 - front;
+    layers[back].style.backgroundImage = `url("${BACKGROUNDS[index]}")`;
+    layers[back].setAttribute('data-on', '');
+    layers[front].removeAttribute('data-on');
+    front = back;
+  }, ROTATE_MS);
+  return () => { window.clearInterval(timer); for (const el of layers) el.remove(); };
+}
 
 const ID = 'dsh-ocean-effort-skin';
 const MARK = 'data-dsh-ocean-skin';
@@ -44,7 +75,8 @@ export function apply(ctx: Context): void {
     off.push(insertStyle(tokensCss));
     off.push(insertStyle(controlsCss));
     off.push(insertStyle(effortCss));
-    off.push(insertStyle(`:root { --dsh-ocean-bg: url("${bgUri}"); }\n${skinCss}`));
+    off.push(insertStyle(skinCss));
+    off.push(mountBackgrounds());
     if (c.theme !== undefined) off.push(c.theme.overrideTokens(ID, TOKENS));
     return () => { for (const fn of off.reverse()) fn(); };
   });

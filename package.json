@@ -1,17 +1,20 @@
 {
   "name": "dsh-ocean-effort-skin",
   "version": "0.1.0",
-  "description": "Official DSH theme + uiskin ocean background + Claude desktop model/effort picker (pixel slider).",
+  "description": "Official DSH theme + rotating ocean backgrounds (crossfade, character behind the sidebar) + Claude desktop model/effort picker (pixel slider).",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./icon": "./assets/icon.svg",
+    "./locale/*.json": "./locale/*.json"
   },
   "files": [
     "lib",
     "assets",
+    "locale",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"
