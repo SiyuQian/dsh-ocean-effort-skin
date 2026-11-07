@@ -19,8 +19,25 @@ html[data-dsh-ocean-skin]:has(body[data-ds-dark-theme]) { background-color: #141
   content: ""; position: absolute; inset: 0;
   background: rgba(250, 247, 240, 0.18);
 }
-body[data-ds-dark-theme] .dsh-ocean-bg-layer::after { background: rgba(12, 11, 10, 0.62); }
+body[data-ds-dark-theme] .dsh-ocean-bg-layer::after { background: rgba(12, 11, 10, 0.35); }
 
+/* Cover layers. The official UI paints --dsw-alias-bg-base on sticky headers
+   and fades so that scrolled content disappears under them. With a translucent
+   bg-base they (a) let the content show through and (b) stack a second tint on
+   the frame's own, which darkens them into a visible band. Make them glass
+   instead: no extra tint, and blur what scrolls underneath. Matched by CSS
+   module local names (the hash prefix changes between builds; the name does not). */
+html[data-dsh-ocean-skin] {
+  --dsh-ocean-glass-blur: blur(24px) saturate(1.2);
+}
+html[data-dsh-ocean-skin] [class*="_pageBar"][data-natural]::before,
+html[data-dsh-ocean-skin] [class*="_compactionButton"],
+html[data-dsh-ocean-skin] [data-expanded] [data-open] [data-disclosure-header],
+html[data-dsh-ocean-skin] [class*="_bannerWrap"] {
+  background: transparent !important;
+  -webkit-backdrop-filter: var(--dsh-ocean-glass-blur);
+  backdrop-filter: var(--dsh-ocean-glass-blur);
+}
 @media (prefers-reduced-motion: reduce) {
   .dsh-ocean-bg-layer { transition: none; }
 }
