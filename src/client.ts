@@ -58,7 +58,7 @@ function insertStyle(css: string): () => void {
 // Translucent official surfaces so the background shows through. Only stable
 // semantic tokens are touched; no hashed class names.
 const TOKENS = {
-  '--dsw-alias-bg-base': { light: 'rgba(250, 249, 246, 0.80)', dark: 'rgba(28, 27, 26, 0.80)' },
+  '--dsw-alias-bg-base': { light: 'rgba(250, 249, 246, 0.90)', dark: 'rgba(28, 27, 26, 0.90)' },
   '--dsw-specific-sidebar-fill': { light: 'rgba(246, 244, 240, 0.86)', dark: 'rgba(22, 21, 20, 0.86)' },
 };
 
