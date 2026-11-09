@@ -20,4 +20,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The background image assets/bg.jpg is NOT covered by this license; see README.md.
+The artwork in assets/ (avatar.png, icon.svg, and bg-1.jpg through bg-4.jpg) is NOT covered by this license; see README.md. The adapted model picker retains its separate MIT notice in src/model-controls/LICENSE-claude-desktop-theme.

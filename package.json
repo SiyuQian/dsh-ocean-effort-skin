@@ -1,5 +1,5 @@
 {
-  "name": "dsh-ocean-effort-skin",
+  "name": "@siyuqian/dsh-ocean-effort-skin",
   "version": "0.1.0",
   "description": "Official DSH theme + rotating ocean backgrounds (crossfade, character behind the sidebar) + Claude desktop model/effort picker (pixel slider).",
   "type": "module",
@@ -17,10 +17,13 @@
     "locale",
     "cordis.patch.yml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "src/model-controls/LICENSE-claude-desktop-theme"
   ],
   "scripts": {
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepublishOnly": "npm test"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
@@ -41,6 +44,10 @@
         "@deepseek-ai/dsh-client-ui-model-selection"
       ]
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
