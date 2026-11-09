@@ -9,20 +9,44 @@ A light skin for DeepSeek Harness (Desktop and Web). It keeps the **official DSH
 
 ## Install
 
+Once the first scoped npm release has been published:
+
 ```
-dsh plugin --profile desktop add github:SiyuQian/dsh-ocean-effort-skin
+dsh plugin --profile desktop add @siyuqian/dsh-ocean-effort-skin
 ```
+
+Installing the registry package under its own name enables DSH's native **Plugins → Ocean skin → Version / Recheck** section. Git and local links, including the development checkout, do not support native version checks. Do not use an `npm:` alias.
+
+For migration, first record the old source, version, enabled state, and row config. Publish and verify the scoped package before removing the old bundle through Plugin Manager, then install the scoped package with the original enabled state. Keep the row id `dsh-ocean-effort-skin`; remove or update only stale `name: dsh-ocean-effort-skin` assertions on that row. Storage keys and settings stay unchanged. If installation fails, reinstall the recorded source. Never enable old and scoped names together.
+
+中文：首次发布后安装 `@siyuqian/dsh-ocean-effort-skin` 的 npm 版本，才会显示原生「版本／重新检查」区域；Git、本地链接和 `npm:` 别名不支持。迁移前记录旧来源、版本、启用状态与配置，先验证发布包再通过插件管理器更换来源，保留行 id、设置与存储键；失败则恢复原来源，不要同时启用新旧包。
 
 Then refresh the page. Do not enable this together with `dsh-claude-desktop-theme`: both replace the `conversation.input.model` slot.
 
 ## Build
 
 ```
-npm install
-npm run build   # writes lib/index.js and lib/client.js
+npm ci --ignore-scripts
+npm test        # builds lib/index.js and lib/client.js, verifies scoped Client registration
 ```
 
 `lib/` is committed so the package installs directly from GitHub.
+
+## Publish
+
+Use an npm account with write access to `@siyuqian`; do not store credentials in this repository. Confirm permission to redistribute the character-reference artwork described below before publishing publicly.
+
+```sh
+npm ci --ignore-scripts
+npm test
+npm pack --dry-run
+npm whoami --registry=https://registry.npmjs.org/
+npm publish --access public
+```
+
+Verify `npm view @siyuqian/dsh-ocean-effort-skin version repository` before changing any profile. Increment both manifest and lockfile versions for subsequent releases. The package includes the adapted model picker's MIT notice alongside the root license.
+
+中文：使用有权写入 `@siyuqian` 的 npm 账号，公开发布前确认下述参考角色图片的再分发授权。先测试、检查打包内容，发布后确认版本与仓库，再迁移安装；不要把凭据写入仓库。
 
 ## Credits
 
